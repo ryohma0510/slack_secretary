@@ -17,7 +17,7 @@ class Slackbot
         Slack.chat_postMessage(text: '「不足！不足しているもの.欲しい個数」と言えば、買い物リストに入れることができます。', channel: '#random')
       # 家事当番を決めたい時
       elsif data['text'].include?('ビンゴ！') && data['subtype'] != 'bot_message'
-        people = ['@ryoma', '@brother', '@mother', '@father']
+        people = ['@ryoma', '@urara']
         case Time.now.wday
         when 1
           Slack.chat_postMessage(text: 'ダンボールの日です', channel: '#random')
@@ -28,10 +28,10 @@ class Slackbot
         when 6
           Slack.chat_postMessage(text: '燃えるゴミの日です', channel: '#random')
         end
-        Slack.chat_postMessage(text: "じゃじゃ〜ん。ゴミ当番は#{people[0]}です", channel: '#random', link_names: true, mrkdwn: true)
-        Slack.chat_postMessage(text: "じゃじゃ〜ん。朝ごはん当番は#{people[rand(4)]}です", channel: '#random', link_names: true, mrkdwn: true)
-        Slack.chat_postMessage(text: "じゃじゃ〜ん。朝ごはん片付けは#{people[rand(4)]}です", channel: '#random', link_names: true, mrkdwn: true)
-        Slack.chat_postMessage(text: "じゃじゃ〜ん。掃除当番は#{people[rand(4)]}です", channel: '#random', link_names: true, mrkdwn: true)
+        Slack.chat_postMessage(text: "じゃじゃ〜ん。ゴミ当番は#{people[rand(2)]}です", channel: '#random', link_names: true, mrkdwn: true)
+        Slack.chat_postMessage(text: "じゃじゃ〜ん。朝ごはん当番は#{people[rand(2)]}です", channel: '#random', link_names: true, mrkdwn: true)
+        Slack.chat_postMessage(text: "じゃじゃ〜ん。朝ごはん片付けは#{people[rand(2)]}です", channel: '#random', link_names: true, mrkdwn: true)
+        Slack.chat_postMessage(text: "じゃじゃ〜ん。掃除当番は#{people[rand(2)]}です", channel: '#random', link_names: true, mrkdwn: true)
       # 占いをしたい時
       elsif data['text'].include?('占い！') && data['subtype'] != 'bot_message'
         fortune = ['大吉', '中吉', '小吉', '吉']
@@ -41,7 +41,7 @@ class Slackbot
         if Item.all.exists?
           Slack.chat_postMessage(text: '不足している日用品はこちらです', channel: '#random')
           Item.all.each do |item|
-            Slack.chat_postMessage(text: "ID番号#{item.id}:#{item.name}が#{item.number}個不足しています", channel: '#random', mrkdwn: true)
+            Slack.chat_postMessage(text: "ID番号#{item.id}:#{item.name}が#{item.number}個不足しています", channel: '#random')
           end
           Slack.chat_postMessage(text: '不足している日用品を買ったら「購入！番号.買った個数」と教えてください！', channel: '#random')
         else
